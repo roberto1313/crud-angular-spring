@@ -1,10 +1,12 @@
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-
+import { AppMaterialModule } from '../shared/app-material/app-material.module';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses/courses.component';
-import { AppMaterialModule } from '../shared/app-material/app-material.module';
+
+
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { AppMaterialModule } from '../shared/app-material/app-material.module';
   imports: [
     CommonModule,
     AppMaterialModule,
-    CoursesRoutingModule
+    CoursesRoutingModule,
+    NgxUiLoaderModule
+
   ]
 })
 export class CoursesModule { }
