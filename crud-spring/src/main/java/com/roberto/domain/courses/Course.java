@@ -1,5 +1,6 @@
 package com.roberto.domain.courses;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.roberto.domain.courses.models.CourseModel;
 import jakarta.persistence.*;
 import lombok.Data;
