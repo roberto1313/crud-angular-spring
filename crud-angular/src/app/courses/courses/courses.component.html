@@ -22,6 +22,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <app-message-empty [ngShow]="courses.length === 0"></app-message-empty>
         </div>
         
         <ng-template #loading>
