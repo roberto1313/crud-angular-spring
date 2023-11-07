@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 
 import { Course } from '../models/course';
 import { CoursesService } from '../services/courses.service';
+import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
 
 @Component({
   selector: 'app-courses',
@@ -15,8 +16,13 @@ export class CoursesComponent implements OnInit {
   displayedColumns = ['name', 'category'];
 
   
-  constructor(private cousrsesService: CoursesService) {
-    this.courses$ = this.cousrsesService.list();
+  constructor(private cousrsesService: CoursesService, private toast: ToastHelper) {
+    this.courses$ = this.cousrsesService.list().pipe(
+      catchError(error => {
+        this.toast.error(error?.message, 'Atenção!')
+        return of([])
+      })
+    )
     
   }
   

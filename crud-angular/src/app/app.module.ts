@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
+import { ToastrModule, provideToastr } from 'ngx-toastr';
+import { ToastHelper } from './shared/helpers/toast.helper';
 
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
@@ -38,9 +40,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatToolbarModule,
     NgxUiLoaderHttpModule,
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
+    ToastrModule.forRoot(),
   ],
   providers: [
+    ToastHelper,
     {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+    provideAnimations(), // required animations providers
+    provideToastr(), //
   ],
   bootstrap: [AppComponent]
 })
