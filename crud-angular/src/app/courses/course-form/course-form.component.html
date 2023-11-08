@@ -1,1 +1,19 @@
-<p>course-form works!</p>
+<mat-card>
+    <mat-card-content>
+        <mat-toolbar color="primary">Detalhes do Curso</mat-toolbar>
+        <form [formGroup]="courseForm" *ngIf="courseForm" class="min-with">
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nome</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Categoria</mat-label>
+                <input matInput placeholder="Placeholder" formControlName="category">
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Salvar</button>
+        <button mat-raised-button (click)="onCancel()">Cancelar</button>
+    </mat-card-actions>
+</mat-card>

@@ -1,10 +1,10 @@
-import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
-import { Course } from '../models/course';
 import { delay, first, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
+import { CourseModel } from '../models/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +16,11 @@ export class CoursesService {
   constructor(private httpClient: HttpClient,private ngxService: NgxUiLoaderService) { }
 
   list() {
-    return this.httpClient.get<Course[]>(`${this.API}/courses`)
+    return this.httpClient.get<CourseModel[]>(`${this.API}/courses`)
     .pipe(
       first(),
       delay(1000),
-      tap((courses: Course[]) => console.log(courses))
+      tap((courses: CourseModel[]) => console.log(courses))
     );
   }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, of } from 'rxjs';
 
-import { Course } from '../models/course';
-import { CoursesService } from '../services/courses.service';
-import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
+import { CoursesService } from '../services/courses.service';
+import { CourseModel } from '../models/course.model';
 
 @Component({
   selector: 'app-courses',
@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  courses$: Observable<Course[]>;
+  courses$: Observable<CourseModel[]>;
 
   displayedColumns = ['name', 'category', 'actions'];
 
