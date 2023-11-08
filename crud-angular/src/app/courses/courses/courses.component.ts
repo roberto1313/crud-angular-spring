@@ -4,6 +4,7 @@ import { Observable, catchError, of } from 'rxjs';
 import { Course } from '../models/course';
 import { CoursesService } from '../services/courses.service';
 import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-courses',
@@ -11,29 +12,28 @@ import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  courses$:Observable<Course[]>;
+  courses$: Observable<Course[]>;
 
-  displayedColumns = ['name', 'category'];
+  displayedColumns = ['name', 'category', 'actions'];
 
-  
-  constructor(private cousrsesService: CoursesService, private toast: ToastHelper) {
+  constructor(
+    private cousrsesService: CoursesService,
+    private toast: ToastHelper,
+    private router: Router,
+    private route: ActivatedRoute
+    ) {
     this.courses$ = this.cousrsesService.list().pipe(
       catchError(error => {
         this.toast.error(error?.message, 'Atenção!')
         return of([])
       })
     )
-    
-  }
-  
-  ngOnInit(): void {
-    // start foreground spinner of the master loader with 'default' taskId
-    // Stop the foreground loading after 5s
-    setTimeout(() => {
-       // stop foreground spinner of the master loader with 'default' taskId
-    }, 5000);
+
   }
 
+  ngOnInit(): void { }
 
-
+  onAdd() {
+    this.router.navigate(['new'], {relativeTo: this.route});
+  }
 }
