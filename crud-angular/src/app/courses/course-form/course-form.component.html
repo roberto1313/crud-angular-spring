@@ -4,11 +4,15 @@
         <form [formGroup]="courseForm" *ngIf="courseForm" class="min-with">
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Nome</mat-label>
-                <input matInput placeholder="Placeholder" formControlName="name">
+                <input matInput placeholder="Digite um nome" formControlName="name">
             </mat-form-field>
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Categoria</mat-label>
-                <input matInput placeholder="Placeholder" formControlName="category">
+                <mat-select formControlName="category" placeholder="Selecione uma categoria">
+                    <mat-option></mat-option>
+                    <mat-option value="front-end">Front-end</mat-option>
+                    <mat-option value="back-end">Back-end</mat-option>
+                </mat-select>
             </mat-form-field>
         </form>
     </mat-card-content>

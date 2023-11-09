@@ -22,10 +22,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   fgsType: SPINNER.squareJellyBox, // foreground spinner type
   pbThickness: 5, // progress bar thickness
   hasProgressBar: false,
-  maxTime: 15000,
-  minTime: 5000,
+  maxTime: 5000,
+  minTime: 1000,
   fastFadeOut: true,
-  bgsOpacity: 0.7
+  bgsOpacity: 0.7,
+  masterLoaderId: "loaderId"
 };
 
 @NgModule({
