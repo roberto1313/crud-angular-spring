@@ -2,7 +2,7 @@ import { CoursesService } from './../services/courses.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CourseModel } from '../models/course.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
 import { Location } from '@angular/common';
 
@@ -15,17 +15,42 @@ export class CourseFormComponent implements OnInit {
 
   courseForm?: FormGroup;
   cousrseModel: CourseModel = new CourseModel();
-
+  courseId: any;
   constructor(
       private formBuilder: FormBuilder,
-     private router: Router, 
+     private activedRoute: ActivatedRoute, 
      private courseService: CoursesService,
      private toast: ToastHelper,
      private location: Location
-     ) {}
+     ) {
+      this.courseId = this.activedRoute.snapshot.paramMap.get('id');
+     }
 
   ngOnInit(): void {
-    this.buildCourseFormGroup();
+    if(this.courseId) {
+      this.getById(this.courseId);
+
+    } else {
+      this.cousrseModel = new CourseModel();
+      this.buildCourseFormGroup();
+    }
+
+  }
+
+  getById(id: number) {
+    this.courseService.getById(id).subscribe(
+      {
+        next: (response: CourseModel) => {
+          this.cousrseModel = response;
+          this.buildCourseFormGroup();
+        },
+        error: (error: string) => {
+          console.log(error);
+          this.toast.error(error);
+          // this.onCancel();
+        }
+      }
+    )
   }
 
   buildCourseFormGroup() {
@@ -39,7 +64,11 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.courseService.save(this.cousrseModel).subscribe(
+    const obserbable = this.cousrseModel._id ?
+    this.courseService.update(this.cousrseModel)
+    : this.courseService.save(this.cousrseModel)
+    
+    obserbable.subscribe(
       {
         next: (success: any) => {
           this.toast.success(success);

@@ -24,15 +24,18 @@ public class Course {
        ChangeName(name);
        ChangeCategory(category);
     }
-
-    protected void ChangeName(String name) {
+    public void update(String name, String category) {
+        ChangeName(name);
+        ChangeCategory(category);
+    }
+    private void ChangeName(String name) {
         this.name = name;
     }
-
-    protected void ChangeCategory(String category) {
+    private void ChangeCategory(String category) {
         this.category = category;
     }
     public CourseModel ToModel() {
         return new CourseModel(id, name, category);
     }
+
 }

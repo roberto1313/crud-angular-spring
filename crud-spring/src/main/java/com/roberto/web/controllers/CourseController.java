@@ -11,9 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/courses")
 public class CourseController {
-
     private final ICourseService courseService;
-
     public CourseController(ICourseService courseService) {
         this.courseService = courseService;
     }
@@ -26,5 +24,14 @@ public class CourseController {
     @PostMapping("")
     public void create(@RequestBody CourseModel courseModel) {
         this.courseService.create(courseModel);
+    }
+
+    @PutMapping("")
+    public void update(@RequestBody CourseModel courseModel) throws Exception {
+        this.courseService.update(courseModel);
+    }
+    @GetMapping("/{id}")
+    public CourseModel getById(@PathVariable String id) throws Exception {
+        return courseService.getById(Long.parseLong(id));
     }
 }
