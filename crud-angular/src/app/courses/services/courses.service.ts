@@ -15,12 +15,14 @@ export class CoursesService {
 
   constructor(private httpClient: HttpClient, private ngxService: NgxUiLoaderService) { }
 
-  list() {
+  list(): Observable<CourseModel[]> {
     return this.httpClient.get<CourseModel[]>(`${this.API}/courses`)
       .pipe(
-        first(),
         delay(1000),
-        tap((courses: CourseModel[]) => console.log(courses))
+        first(),
+        catchError((response: any) => throwError(() =>
+          response && response.error && response.error.message ? response.error.message : 'Error ao listar os cursos. Tente novamente'
+        ))
       );
   }
 
@@ -42,6 +44,16 @@ export class CoursesService {
           response && response.error && response.error.message ? response.error.message : 'Error ao atualizar o curso. Tente novamente'
         ))
       )
+  }
+
+  delete(id: any): Observable<string> {
+    return this.httpClient.delete(`${this.API}/courses/${id}`)
+    .pipe(
+      map(() => 'Dados removido com sucesso.'),
+      catchError((response: any) => throwError(() =>
+        response && response.error && response.error.message ? response.error.message : 'Error ao remover o curso. Tente novamente'
+      ))
+    )
   }
 
   getById(id: any): Observable<CourseModel> {

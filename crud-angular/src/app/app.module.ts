@@ -4,11 +4,11 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
+import { provideToastr, ToastrModule } from 'ngx-toastr';
+import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgxUiLoaderConfig, NgxUiLoaderHttpModule, NgxUiLoaderModule, POSITION, SPINNER } from 'ngx-ui-loader';
-import { ToastrModule, provideToastr } from 'ngx-toastr';
 import { ToastHelper } from './shared/helpers/toast.helper';
 
 

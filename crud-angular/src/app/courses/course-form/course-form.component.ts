@@ -17,17 +17,17 @@ export class CourseFormComponent implements OnInit {
   cousrseModel: CourseModel = new CourseModel();
   courseId: any;
   constructor(
-      private formBuilder: FormBuilder,
-     private activedRoute: ActivatedRoute, 
-     private courseService: CoursesService,
-     private toast: ToastHelper,
-     private location: Location
-     ) {
-      this.courseId = this.activedRoute.snapshot.paramMap.get('id');
-     }
+    private formBuilder: FormBuilder,
+    private activedRoute: ActivatedRoute,
+    private courseService: CoursesService,
+    private toast: ToastHelper,
+    private location: Location
+  ) {
+    this.courseId = this.activedRoute.snapshot.paramMap.get('id');
+  }
 
   ngOnInit(): void {
-    if(this.courseId) {
+    if (this.courseId) {
       this.getById(this.courseId);
 
     } else {
@@ -45,9 +45,8 @@ export class CourseFormComponent implements OnInit {
           this.buildCourseFormGroup();
         },
         error: (error: string) => {
-          console.log(error);
           this.toast.error(error);
-          // this.onCancel();
+          this.onCancel();
         }
       }
     )
@@ -55,8 +54,8 @@ export class CourseFormComponent implements OnInit {
 
   buildCourseFormGroup() {
     this.courseForm = this.formBuilder.group({
-      name:[this.cousrseModel?.name, []],
-      category:[this.cousrseModel?.category,[]]
+      name: [this.cousrseModel?.name, []],
+      category: [this.cousrseModel?.category, []]
     })
 
     this.courseForm.get('name')?.valueChanges.subscribe(value => this.cousrseModel.name = value);
@@ -65,9 +64,9 @@ export class CourseFormComponent implements OnInit {
 
   onSubmit() {
     const obserbable = this.cousrseModel._id ?
-    this.courseService.update(this.cousrseModel)
-    : this.courseService.save(this.cousrseModel)
-    
+      this.courseService.update(this.cousrseModel)
+      : this.courseService.save(this.cousrseModel)
+
     obserbable.subscribe(
       {
         next: (success: any) => {

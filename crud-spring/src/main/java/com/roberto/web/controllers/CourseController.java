@@ -16,22 +16,25 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping
-    public @ResponseBody List<CourseModel> list() {
-        return courseService.list();
-    }
-
     @PostMapping("")
     public void create(@RequestBody CourseModel courseModel) {
         this.courseService.create(courseModel);
     }
-
     @PutMapping("")
     public void update(@RequestBody CourseModel courseModel) throws Exception {
         this.courseService.update(courseModel);
+    }
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id) throws Exception {
+        courseService.delete(Long.parseLong(id));
+    }
+    @GetMapping
+    public @ResponseBody List<CourseModel> list() {
+        return courseService.list();
     }
     @GetMapping("/{id}")
     public CourseModel getById(@PathVariable String id) throws Exception {
         return courseService.getById(Long.parseLong(id));
     }
+
 }

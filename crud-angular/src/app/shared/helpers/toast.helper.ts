@@ -14,7 +14,7 @@ export class ToastHelper {
     }
 
     success(message: string, title?: string) {
-        this.toastrService.success(message, title ?? "OK!", {
+        this.toastrService.success(message, title, {
             timeOut: this.duration,
             positionClass: this.positon,
         }).onTap
@@ -23,7 +23,7 @@ export class ToastHelper {
     }
 
     error(message: string, title?: string) {
-        this.toastrService.error(message, title ?? "Error!", {
+        this.toastrService.error(message, title, {
             timeOut: this.duration,
             positionClass: this.positon,
         }).onTap
