@@ -1,10 +1,11 @@
-import { CoursesService } from './../services/courses.service';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CourseModel } from '../models/course.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
-import { Location } from '@angular/common';
+
+import { CourseModel } from '../models/course.model';
+import { CoursesService } from './../services/courses.service';
 
 @Component({
   selector: 'app-course-form',
@@ -54,8 +55,8 @@ export class CourseFormComponent implements OnInit {
 
   buildCourseFormGroup() {
     this.courseForm = this.formBuilder.group({
-      name: [this.cousrseModel?.name, []],
-      category: [this.cousrseModel?.category, []]
+      name: [this.cousrseModel?.name, [Validators.required]],
+      category: [this.cousrseModel?.category, [Validators.required]]
     })
 
     this.courseForm.get('name')?.valueChanges.subscribe(value => this.cousrseModel.name = value);
@@ -63,6 +64,16 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit() {
+
+    if(this.courseForm?.valid) {
+      this.save();
+    } else {
+      this.toast.error('Todos os campos são obrigatórios. Preencha os campos e tente novamente');
+    }
+
+  }
+
+  save() {
     const obserbable = this.cousrseModel._id ?
       this.courseService.update(this.cousrseModel)
       : this.courseService.save(this.cousrseModel)

@@ -7,6 +7,7 @@ import { CoursesService } from '../services/courses.service';
 import { CourseModel } from '../models/course.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/alert-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-courses',
@@ -15,8 +16,9 @@ import { AlertDialogComponent } from 'src/app/shared/components/alert-dialog/ale
 })
 export class CoursesComponent implements OnInit {
   courses?: CourseModel[] | null;
+  dataSource = new MatTableDataSource(this.courses as CourseModel[]);
 
-  displayedColumns = ['name', 'category', 'actions'];
+  readonly displayedColumns = ['name', 'category', 'actions'];
 
   constructor(
     private cousrsesService: CoursesService,
@@ -33,9 +35,7 @@ export class CoursesComponent implements OnInit {
   }
 
   ngAfterContentInit(): void {
-    //Called after ngOnInit when the component's or directive's content has been initialized.
-    //Add 'implements AfterContentInit' to the class.
-    this.list(); 
+    this.list();
   }
 
   list() {
@@ -44,6 +44,7 @@ export class CoursesComponent implements OnInit {
       {
         next: (response: CourseModel[]) => {
           this.courses = response;
+          this.dataSource.data = response;
         },
         error: (error: string) => {
           this.toast.error(error, 'Atenção!');
@@ -67,10 +68,16 @@ export class CoursesComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe((asDelete) => {
-      console.log(asDelete);
       if (asDelete) {
         this.list();
       }
     })
   }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.courses = this.dataSource.filteredData;
+  }
+
 }
