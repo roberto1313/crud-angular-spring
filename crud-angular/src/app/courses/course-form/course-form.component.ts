@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
@@ -17,6 +17,7 @@ export class CourseFormComponent implements OnInit {
   courseForm?: FormGroup;
   cousrseModel: CourseModel = new CourseModel();
   courseId: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private activedRoute: ActivatedRoute,

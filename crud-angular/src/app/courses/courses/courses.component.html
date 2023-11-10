@@ -1,51 +1,11 @@
 <mat-card class="container">
     <mat-card-content class="mat-elevation-z8">
-        <mat-toolbar class="mat-primary">
-            Cursos Disponíveis
-            <div slot="end" style="margin-left: auto;">
-                <button mat-stroked-button aria-label="Adicionar curso" (click)="onAdd()">Adicionar
-                    <mat-icon slot="start" fontIcon="add"></mat-icon>
-                </button>
-            </div>
-        </mat-toolbar>
+        <app-header title="Cursos Disponíveis" [buttons]="courseItemButtons"></app-header>
         <div class="loading-spinner" *ngIf="!courses">
             <ngx-ui-loader></ngx-ui-loader>
         </div>
         <div>
-            <mat-form-field style="width: 100%;" *ngIf="courses">
-                <input matInput (keyup)="applyFilter($event)" placeholder="Filtrar dados" #input>
-            </mat-form-field>
-            <mat-table [dataSource]="courses" matSort *ngIf="courses">
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Curso </mat-header-cell>
-                    <mat-cell *matCellDef="let course"> {{course.name}} </mat-cell>
-                </ng-container>
-                <!-- Category Column -->
-                <ng-container matColumnDef="category">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Categoria </mat-header-cell>
-                    <mat-cell *matCellDef="let course" class="category"> {{course.category}}
-                        <mat-icon slot="start" aria-hidden="false" aria-label="Categoria do curso" fontIcon="{{ course.category | category
-                        }}"></mat-icon>
-                    </mat-cell>
-                </ng-container>
-                <!-- Actions Column -->
-                <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header class="mat-header-column"> Ações
-                    </mat-header-cell>
-                    <mat-cell *matCellDef="let course" class="mat-cell-column">
-                        <button mat-icon-button color="primary" aria-label="Editar curso" (click)="onEdit(course)">
-                            <mat-icon fontIcon="edit"></mat-icon>
-                        </button>
-                        <button mat-icon-button color="warn" aria-label="Remover curso" (click)="onDelete(course)">
-                            <mat-icon fontIcon="delete"></mat-icon>
-                        </button>
-                    </mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-            </mat-table>
-            <app-message-empty [ngShow]="courses?.length === 0"></app-message-empty>
+            <app-table [courses]="courses" *ngIf="courses" (newItemEvent)="list()"></app-table>
         </div>
     </mat-card-content>
 </mat-card>

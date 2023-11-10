@@ -1,0 +1,8 @@
+<mat-toolbar class="mat-primary">
+    {{ title }}
+    <div slot="end" style="margin-left: auto;" *ngFor="let button of buttons">
+        <button mat-stroked-button aria-label="Curso" (click)="button.onClick()">{{ button.label }}
+            <mat-icon slot="start" fontIcon="{{button.icon}}"></mat-icon>
+        </button>
+    </div>
+</mat-toolbar>
