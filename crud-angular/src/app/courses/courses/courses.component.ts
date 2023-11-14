@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
 
+import { CourseFormComponent } from '../course-form/course-form.component';
 import { CourseModel } from '../models/course.model';
 import { CoursesService } from '../services/courses.service';
 
@@ -21,21 +21,17 @@ export class CoursesComponent implements OnInit {
   constructor(
     private cousrsesService: CoursesService,
     private toast: ToastHelper,
-    private router: Router,
-    private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
   ) {
 
   }
 
+
   ngOnInit(): void {
-    // this.list();
+    this.list()
   }
 
-  ngAfterContentInit(): void {
-    this.list();
-    this.buildButtons()
-  }
+
 
   buildButtons() {
     this.courseItemButtons = [
@@ -53,6 +49,7 @@ export class CoursesComponent implements OnInit {
       {
         next: (response: CourseModel[]) => {
           this.courses = response;
+          this.buildButtons();
           this.dataSource.data = response;
         },
         error: (error: string) => {
@@ -64,7 +61,14 @@ export class CoursesComponent implements OnInit {
   }
 
   onAdd() {
-    this.router.navigate(['new'], { relativeTo: this.route });
+    const dialogRef = this.dialog.open(CourseFormComponent, {
+      data: null,
+    })
+    dialogRef.afterClosed().subscribe((asDelete) => {
+      if (asDelete) {
+        this.list();
+      }
+    })
   }
 
 }

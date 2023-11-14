@@ -5,7 +5,7 @@
             <ngx-ui-loader></ngx-ui-loader>
         </div>
         <div>
-            <app-table [courses]="courses" *ngIf="courses" (newItemEvent)="list()"></app-table>
+            <app-table [courses]="courses" *ngIf="courses" (list)="list()"></app-table>
         </div>
     </mat-card-content>
 </mat-card>

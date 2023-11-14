@@ -1,3 +1,4 @@
+import { CourseFormComponent } from './../../../courses/course-form/course-form.component';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
@@ -15,7 +16,7 @@ export class TableComponent implements OnInit {
   @Input() courses: CourseModel[] = [];
   dataSource = new MatTableDataSource(this.courses);
   readonly displayedColumns = ['name', 'category', 'actions'];
-  @Output() newItemEvent = new EventEmitter<any>();
+  @Output() list = new EventEmitter<any>();
 
   actionButtons: any[] = [];
   course: CourseModel = new CourseModel();
@@ -34,7 +35,19 @@ export class TableComponent implements OnInit {
   }
 
   onEdit(course: CourseModel) {
-    this.router.navigate([`new/${course._id}`], { relativeTo: this.route });
+   this.openModal(course);
+  }
+
+  openModal(course: CourseModel) {
+    const dialogRef = this.dialog.open(CourseFormComponent, {
+      data: course,
+    })
+
+    dialogRef.afterClosed().subscribe((asUpdate) => {
+      if (asUpdate) {
+        this.list.emit(null)
+      }
+    })
   }
 
   onDelete(course: CourseModel) {
@@ -44,7 +57,7 @@ export class TableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((asDelete) => {
       if (asDelete) {
-        this.newItemEvent.emit(null)
+        this.list.emit(null)
       }
     })
   }

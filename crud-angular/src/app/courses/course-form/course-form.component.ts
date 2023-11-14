@@ -1,11 +1,12 @@
 import { Location } from '@angular/common';
-import { Component, EventEmitter, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { ToastHelper } from 'src/app/shared/helpers/toast.helper';
 
 import { CourseModel } from '../models/course.model';
 import { CoursesService } from './../services/courses.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-course-form',
@@ -23,14 +24,15 @@ export class CourseFormComponent implements OnInit {
     private activedRoute: ActivatedRoute,
     private courseService: CoursesService,
     private toast: ToastHelper,
-    private location: Location
+    @Inject(MAT_DIALOG_DATA) public data: CourseModel,
+    private dialogRef: MatDialogRef<CourseFormComponent>
   ) {
     this.courseId = this.activedRoute.snapshot.paramMap.get('id');
   }
 
   ngOnInit(): void {
-    if (this.courseId) {
-      this.getById(this.courseId);
+    if (this.data) {
+      this.getById(this.data._id);
 
     } else {
       this.cousrseModel = new CourseModel();
@@ -39,7 +41,7 @@ export class CourseFormComponent implements OnInit {
 
   }
 
-  getById(id: number) {
+  getById(id: string) {
     this.courseService.getById(id).subscribe(
       {
         next: (response: CourseModel) => {
@@ -66,7 +68,7 @@ export class CourseFormComponent implements OnInit {
 
   onSubmit() {
 
-    if(this.courseForm?.valid) {
+    if (this.courseForm?.valid) {
       this.save();
     } else {
       this.toast.error('Todos os campos são obrigatórios. Preencha os campos e tente novamente');
@@ -83,7 +85,7 @@ export class CourseFormComponent implements OnInit {
       {
         next: (success: any) => {
           this.toast.success(success);
-          this.onCancel();
+          this.onCancel(true);
         },
         error: (error: string) => {
           console.log(error)
@@ -93,8 +95,14 @@ export class CourseFormComponent implements OnInit {
     );
   }
 
-  onCancel() {
-    this.location.back();
+  onCancel(asAction?: boolean) {
+    if (asAction) {
+      this.dialogRef.close(true);
+
+    } else {
+      this.dialogRef.close(false);
+
+    }
   }
 
 }

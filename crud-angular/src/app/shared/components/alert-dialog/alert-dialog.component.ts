@@ -42,7 +42,7 @@ export class AlertDialogComponent {
     if(asAction) {
       this.dialogRef.close(true);
     } else {
-      this.dialogRef.close();
+      this.dialogRef.close(false);
     }
   }
 }
