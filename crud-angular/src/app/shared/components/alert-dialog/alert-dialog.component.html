@@ -1,8 +1,8 @@
-<h1 mat-dialog-title style="color: red;">Atenção!</h1>
-<div mat-dialog-content>
-    Deseja realmente?
+<h1 mat-dialog-title style="color: red; text-align: center;">Atenção!</h1>
+<div mat-dialog-content style="font-weight: 600;">
+   {{data }}
 </div>
-<div mat-dialog-actions>
-    <button mat-stroked-button (click)="onCancelClick()">Fechar</button>
-    <button mat-stroked-button color="warn" (click)="onDeleteClick()">Excluir</button>
+<div mat-dialog-actions class="dialog-actions">
+    <button mat-stroked-button (click)="onFirmClick(true)" color="primary">Sim</button>
+    <button mat-stroked-button color="warn" (click)="onFirmClick(false)">Não</button>
 </div>

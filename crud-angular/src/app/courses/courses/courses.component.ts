@@ -13,7 +13,7 @@ import { CoursesService } from '../services/courses.service';
   styleUrls: ['./courses.component.scss']
 })
 export class CoursesComponent implements OnInit {
-  courses?: CourseModel[] | null;
+  courses?: CourseModel[] | null = [];
   courseItemButtons: any[] = [];
   actionsTableItemButtons: any[] = [];
   dataSource = new MatTableDataSource(this.courses as CourseModel[]);
@@ -71,4 +71,7 @@ export class CoursesComponent implements OnInit {
     })
   }
 
+  getCoursesFilter(courses: any) {
+    this.courses = courses;
+  }
 }

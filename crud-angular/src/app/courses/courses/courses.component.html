@@ -1,6 +1,7 @@
 <mat-card class="container">
     <mat-card-content class="mat-elevation-z8">
         <app-header title="Cursos Disponíveis" [buttons]="courseItemButtons"></app-header>
+        <app-filter [courses]="courses" (getItemFilterEvent)="getCoursesFilter($event)" *ngIf="courses"></app-filter>
         <div class="loading-spinner" *ngIf="!courses">
             <ngx-ui-loader></ngx-ui-loader>
         </div>

@@ -13,36 +13,11 @@ export class AlertDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: CourseModel,
     private dialogRef: MatDialogRef<AlertDialogComponent>,
-    private couserService: CoursesService,
-    private toast: ToastHelper
 
-  ) {}
+  ) { }
 
-
-  onDeleteClick() {
-    this.couserService.delete(this.data._id).subscribe(
-      {
-        next: (success: string) => {
-          this.toast.success(success);
-          this.closeDialog(true)
-        },
-        error: (error: string) => {
-          this.toast.error(error);
-          this.closeDialog()
-        }
-      }
-    )
+  onFirmClick(action: boolean) {
+    this.dialogRef.close(action);
   }
 
-  onCancelClick() {
-    this.closeDialog();
-  }
-
-  closeDialog(asAction?: boolean) {
-    if(asAction) {
-      this.dialogRef.close(true);
-    } else {
-      this.dialogRef.close(false);
-    }
-  }
 }

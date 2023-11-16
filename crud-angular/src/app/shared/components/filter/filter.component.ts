@@ -11,11 +11,12 @@ export class FilterComponent implements OnInit {
   @Input() courses: CourseModel[] = [];
   dataSource = new MatTableDataSource(this.courses);
   @Output() newFilterCourses: CourseModel[] = [];
-  @Output() newItemFilterEvent = new EventEmitter<any>();
+  @Output() getItemFilterEvent = new EventEmitter<any>();
 
   constructor() {}
 
   ngOnInit(): void {
+    console.log(this.dataSource)
     if (!this.dataSource.data.length) {
       this.dataSource.data = this.courses;
     }
@@ -26,6 +27,6 @@ export class FilterComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.courses = this.dataSource.filteredData;
-    this.newItemFilterEvent.emit(this.courses);
+    this.getItemFilterEvent.emit(this.courses);
   }
 }
